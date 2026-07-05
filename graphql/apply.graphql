@@ -1,0 +1,6 @@
+mutation ApplyToJob($input: ApplyInput!) {
+  applyToJob(input: $input) {
+    success
+    message
+  }
+}

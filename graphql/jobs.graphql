@@ -1,0 +1,16 @@
+query GetJobs {
+  jobs {
+    id
+    title
+    salaryMin
+    salaryMax
+    status
+    type
+    location
+    company {
+      id
+      name
+      location
+    }
+  }
+}
