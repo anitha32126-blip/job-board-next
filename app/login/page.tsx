@@ -8,31 +8,22 @@ export default function LoginPage() {
   const searchParams = useSearchParams();
 
   const callbackUrl =
-  searchParams?.get("callbackUrl") ?? "/jobs";
-  const [username, setUsername] = useState("");
+    searchParams?.get("callbackUrl") ?? "/jobs";
 
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
   async function handleLogin(
-  e: React.FormEvent
-) {
-  e.preventDefault();
+    e: React.FormEvent
+  ) {
+    e.preventDefault();
 
-  const params =
-    new URLSearchParams(
-      window.location.search
-    );
-
-  const callbackUrl =
-    params.get("callbackUrl") ??
-    "/";
-
-  await signIn("credentials", {
-    username,
-    password,
-    callbackUrl,
-  });
-}
+    await signIn("credentials", {
+      username,
+      password,
+      callbackUrl,
+    });
+  }
 
   return (
     <main className="min-h-screen flex items-center justify-center">
@@ -45,6 +36,7 @@ export default function LoginPage() {
         </h1>
 
         <input
+          type="text"
           placeholder="Username"
           className="border p-2 w-full rounded"
           value={username}
@@ -64,7 +56,8 @@ export default function LoginPage() {
         />
 
         <button
-          className="bg-blue-600 text-white p-2 rounded w-full"
+          type="submit"
+          className="bg-blue-600 text-white p-2 rounded w-full hover:bg-blue-700"
         >
           Login
         </button>

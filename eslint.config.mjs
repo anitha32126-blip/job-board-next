@@ -14,5 +14,9 @@ const eslintConfig = defineConfig([
     "next-env.d.ts",
   ]),
 ]);
-
+{
+  ignores: [
+    "generated/**"
+  ]
+}
 export default eslintConfig;

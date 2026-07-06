@@ -1,7 +1,9 @@
 "use client";
-import { useEffect, useState } from 'react';
-import { useAuth } from '../context/AuthContext';
-import { useAppStore } from "../store/useAppStore";
+
+import { useEffect, useState } from "react";
+import Link from "next/link";
+import { useAuth } from "../context/AuthContext";
+
 interface HeaderProps {
   savedCount: number;
 }
@@ -11,20 +13,20 @@ export default function Header({
 }: HeaderProps) {
   const { user } = useAuth();
 
-  const [darkMode, setDarkMode] =
-    useState(false);
+  const [darkMode, setDarkMode] = useState(() => {
+  if (typeof window !== "undefined") {
+    return localStorage.getItem("theme") === "dark";
+  }
+  return false;
+});
 
-  useEffect(() => {
-    const savedTheme =
-      localStorage.getItem('theme');
-
-    if (savedTheme === 'dark') {
-      setDarkMode(true);
-      document.documentElement.classList.add(
-        'dark'
-      );
-    }
-  }, []);
+useEffect(() => {
+  if (darkMode) {
+    document.documentElement.classList.add("dark");
+  } else {
+    document.documentElement.classList.remove("dark");
+  }
+}, [darkMode]);
 
   function toggleDarkMode() {
     const newMode = !darkMode;
@@ -32,21 +34,11 @@ export default function Header({
     setDarkMode(newMode);
 
     if (newMode) {
-      document.documentElement.classList.add(
-        'dark'
-      );
-      localStorage.setItem(
-        'theme',
-        'dark'
-      );
+      document.documentElement.classList.add("dark");
+      localStorage.setItem("theme", "dark");
     } else {
-      document.documentElement.classList.remove(
-        'dark'
-      );
-      localStorage.setItem(
-        'theme',
-        'light'
-      );
+      document.documentElement.classList.remove("dark");
+      localStorage.setItem("theme", "light");
     }
   }
 
@@ -68,23 +60,17 @@ export default function Header({
           </h1>
 
           <p>
-            User:{' '}
-            {user
-              ? user.name
-              : 'Not Logged In'}
+            User: {user ? user.name : "Not Logged In"}
           </p>
 
-          <p>
-  <a
-    href="/saved"
-    style={{
-      color: "blue",
-      textDecoration: "underline",
-    }}
-  >
-    Saved Jobs ({savedCount})
-  </a>
-</p>
+          <p className="mt-2">
+            <Link
+              href="/saved"
+              className="text-blue-600 underline"
+            >
+              Saved Jobs ({savedCount})
+            </Link>
+          </p>
         </div>
 
         <button
@@ -97,34 +83,28 @@ export default function Header({
             py-2
           "
         >
-          {darkMode
-            ? '☀️ Light'
-            : '🌙 Dark'}
+          {darkMode ? "☀️ Light" : "🌙 Dark"}
         </button>
       </header>
 
       <nav
-  className="
-    md:hidden
-    fixed
-    bottom-0
-    left-0
-    right-0
-    border-t
-    bg-background
-    text-foreground
-    flex
-    justify-around
-    py-3
-  "
->
-        <button aria-label="Home">
-          Home
-        </button>
+        className="
+          md:hidden
+          fixed
+          bottom-0
+          left-0
+          right-0
+          border-t
+          bg-background
+          text-foreground
+          flex
+          justify-around
+          py-3
+        "
+      >
+        <Link href="/">Home</Link>
 
-        <button aria-label="Saved Jobs">
-          Saved
-        </button>
+        <Link href="/saved">Saved</Link>
 
         <button aria-label="Profile">
           Profile

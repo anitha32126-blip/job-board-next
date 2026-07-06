@@ -1,4 +1,4 @@
-import ApplyModal from "../../components/ApplyModal";
+
 
 export default function ApplyPage() {
   return (

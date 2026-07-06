@@ -25,51 +25,51 @@ interface JobStore {
 export const useAppStore = create<JobStore>()(
   persist(
     devtools((set) => ({
-    savedJobs: [],
+      savedJobs: [],
 
-    filterOpen: false,
+      filterOpen: false,
 
-    activeTheme: "light",
+      activeTheme: "light",
 
-    lastViewedJob: null,
+      lastViewedJob: null,
 
-    addSavedJob: (job) =>
-  set((state) => {
-    const exists = state.savedJobs.some(
-      (savedJob) => savedJob.id === job.id
-    );
+      addSavedJob: (job) =>
+        set((state) => {
+          const exists = state.savedJobs.some(
+            (savedJob) => savedJob.id === job.id
+          );
 
-    if (exists) {
-      return state;
-    }
+          if (exists) {
+            return state;
+          }
 
-    return {
-      savedJobs: [...state.savedJobs, job],
-    };
-  }),
+          return {
+            savedJobs: [...state.savedJobs, job],
+          };
+        }),
 
-    removeSavedJob: (id) =>
-      set((state) => ({
-        savedJobs: state.savedJobs.filter(
-          (job) => job.id !== id
-        ),
-      })),
+      removeSavedJob: (id) =>
+        set((state) => ({
+          savedJobs: state.savedJobs.filter(
+            (job) => job.id !== id
+          ),
+        })),
 
-    setFilterOpen: (value) =>
-      set({
-        filterOpen: value,
-      }),
+      setFilterOpen: (value) =>
+        set({
+          filterOpen: value,
+        }),
 
-    setTheme: (theme) =>
-      set({
-        activeTheme: theme,
-      }),
+      setTheme: (theme) =>
+        set({
+          activeTheme: theme,
+        }),
 
-    setLastViewedJob: (job) =>
-      set({
-        lastViewedJob: job,
-      }),
-     })),
+      setLastViewedJob: (job) =>
+        set({
+          lastViewedJob: job,
+        }),
+    })),
     {
       name: "job-board-storage",
     }
