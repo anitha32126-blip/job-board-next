@@ -5,10 +5,11 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 
-import type { Job } from "../generated/graphql";
+import type { GetJobsQuery } from "../generated/graphql";
 import { formatSalary } from "../utils/formatSalary";
 import ApplyModal from "./ApplyModal";
 import { useAppStore } from "../store/useAppStore";
+type Job = GetJobsQuery["jobs"][number];
 interface JobCardProps {
   job: Job;
 }

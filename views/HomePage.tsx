@@ -17,7 +17,9 @@ import { useJobs } from "../hooks/useJobs";
 
 import { useAppStore } from "../store/useAppStore";
 
-import type { Job } from "../generated/graphql";
+import type { GetJobsQuery } from "../generated/graphql";
+
+type Job = GetJobsQuery["jobs"][number];
 
 export default function HomePage() {
   const {

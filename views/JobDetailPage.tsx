@@ -1,28 +1,30 @@
 "use client";
+
 import { useEffect } from "react";
+import { useParams } from "next/navigation";
+import { useQuery } from "@apollo/client/react";
 
-
-import {
-  useGetJobQuery
-} from "../generated/graphql";
+import { GetJobDocument } from "../generated/graphql";
 import { useAppStore } from "../store/useAppStore";
-
 import Skeleton from "../components/Skeleton";
 
 export default function JobDetailPage() {
-  const { id } = useParams();
+  const params = useParams();
+
+  const id =
+    typeof params?.id === "string"
+      ? params.id
+      : Array.isArray(params?.id)
+      ? params.id[0]
+      : "";
 
   const setLastViewedJob = useAppStore(
     (state) => state.setLastViewedJob
   );
 
-  const {
-    data,
-    loading,
-    error,
-  } = useGetJobQuery({
+  const { data, loading, error } = useQuery(GetJobDocument, {
     variables: {
-      id: id!,
+      id,
     },
     skip: !id,
   });

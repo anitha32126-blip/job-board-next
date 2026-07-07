@@ -1,6 +1,9 @@
 "use client";
-import type { Job } from "../generated/graphql";
-import JobCard from './JobCard';
+
+import type { GetJobsQuery } from "../generated/graphql";
+import JobCard from "./JobCard";
+
+type Job = GetJobsQuery["jobs"][number];
 
 interface JobListProps {
   jobs: Job[];

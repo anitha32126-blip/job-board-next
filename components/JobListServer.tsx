@@ -1,7 +1,9 @@
 import { gql } from "@apollo/client";
-import { client } from "../../client";
+import { client } from "../client";
 
-import JobList from "../../components/JobList";
+import JobList from "./JobList";
+
+import type { GetJobsQuery } from "../generated/graphql";
 
 const GET_JOBS = gql`
   query GetJobs {
@@ -23,10 +25,14 @@ const GET_JOBS = gql`
 `;
 
 export default async function JobListServer() {
-  const { data } = await client.query({
+  const { data } = await client.query<GetJobsQuery>({
     query: GET_JOBS,
     fetchPolicy: "no-cache",
   });
+
+  if (!data) {
+    return <JobList jobs={[]} />;
+  }
 
   return <JobList jobs={data.jobs} />;
 }

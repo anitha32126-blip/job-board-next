@@ -1,6 +1,8 @@
 import { create } from "zustand";
 import { devtools, persist } from "zustand/middleware";
-import type { Job } from "../generated/graphql";
+import type { GetJobsQuery } from "../generated/graphql";
+
+type Job = GetJobsQuery["jobs"][number];
 
 interface JobStore {
   savedJobs: Job[];
